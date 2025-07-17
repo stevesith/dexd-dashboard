@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Image, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Image, Card } from "react-bootstrap";
 import profilePic2 from "../assets/ipad_small_2x_DSC_0005.jpg";
 
 const ProfilePage: React.FC = () => {
@@ -23,7 +23,6 @@ const ProfilePage: React.FC = () => {
             className="border border-3 border-subtle shadow-sm"
             alt="Profile"
           />
-
         </Col>
         <Col md={8}>
           <Card className="shadow-sm p-4 border-light">
