@@ -1,0 +1,269 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 0 4rem 0;
+  background-image: url('');
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+a.nav-link {
+  color: #fff;
+  border-radius: 8px;
+}
+
+a.nav-link:hover {
+  color: #fff;
+}
+
+.custom-shadow {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.03);
+}
+
+.card-hover {
+  transition: transform 0.3s ease, background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-hover:hover {
+  transform: scale(1.01);
+  background: #fff;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.03);
+}
+
+.card-scores {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: #00f;
+}
+
+.wt-score,
+.rating-core {
+  min-width: 100px;
+  flex: 1 1 auto;
+}
+
+.kpi-titles {
+  color: #000;
+  white-space: nowrap;
+}
+
+.kpi-results {
+  color: #00f;
+  text-align: left;
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.45rem);
+  border-radius: 8px;
+  margin: 0.5rem 0 0;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(
+    -90deg,
+    rgba(207, 207, 256, 0.25),
+    rgba(0, 0, 255, 0.1)
+  );
+  white-space: nowrap;
+}
+
+.score-icons {
+  color: #9696ff;
+  flex-shrink: 0;
+}
+
+.dropdown-menu {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.custom-dropdown-menu .dropdown-item {
+  padding: 12px 24px;
+}
+
+.card {
+  padding: 2rem;
+  max-width: 100%;
+}
+
+.card-subtitle {
+  color: #fff;
+}
+
+#btn-pearls {
+  background: linear-gradient(135deg, #0d6efd, #00f);
+  color: #fff;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.role {
+  display: inline-block;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+
+.role.fade-out {
+  opacity: 0;
+}
+
+.card-with-bg {
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right center;
+}
+
+.card-projects {
+  background-image: url('../assets/bg-projects.png');
+}
+
+.card-rewards {
+  background-image: url('../assets/bg-rewards.png');
+}
+
+.avi-pencil {
+  color: #000;
+  font-size: 0.75rem;
+}
+.avi-edit {
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+.tech-skill:hover {
+  background-color: aqua;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card-title,
+  button {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 992px) {
+  .card-title {
+    white-space: nowrap;
+  }
+
+  .kpi-results {
+    font-size: medium;
+    padding: 0.5rem 0.25rem;
+  }
+
+  button {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-scores {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wt-score,
+  .rating-core {
+    min-width: auto;
+    width: 100%;
+    text-align: center;
+  }
+
+  .kpi-results {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+}
+
+button {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (max-width: 576px) {
+  .tech-skill {
+    flex-direction: column;
+    align-items: start !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand span {
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 576px) {
+  .profile-info p {
+    font-size: 0.9rem;
+  }
+
+  .profile-info .badge {
+    font-size: 0.75rem;
+  }
+}
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .kpi-results {
+    font-size: 0.95rem;
+  }
+
+  #btn-pearls {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .card-with-bg {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .custom-dropdown-menu .dropdown-item {
+    font-size: 0.9rem;
+    padding: 10px 16px;
+  }
+}
+

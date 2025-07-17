@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="svg2" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Generator: Adobe Illustrator 29.6.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 9)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #fff;
+      }
+
+      .st1 {
+        fill: #d4b830;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1">
+    <path id="path13" class="st1" d="M13.9,90L5.9,0h88.2l-8,90-36.1,10-36-10Z"/>
+    <g id="Group">
+      <path id="path18" class="st0" d="M80.2,40h-15.6v-11.3h16.5l1-11h-29.1v33.4h15l-1.3,14.3-13.7,2.5v11.5l24-5.5,3.1-33.9Z"/>
+      <path id="path24" class="st0" d="M47,17.6h-24.6l1,11h12.5v37.6l-6.1-.9-.8-8.8h-11.1l1.5,17.3c27.5,5.5.1,0,27.5,5.5V17.6Z"/>
+    </g>
+  </g>
+</svg>
