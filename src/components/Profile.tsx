@@ -9,6 +9,7 @@ const ProfilePage: React.FC = () => {
     roles: ["Front End Developer", "Digital Designer", "Animator"],
     department: "CME",
     location: "Centurion, South Africa",
+    url: "https://digiq.africa",
   };
 
   return (
@@ -20,12 +21,12 @@ const ProfilePage: React.FC = () => {
             roundedCircle
             width={150}
             height={150}
-            className="border border-3 border-subtle shadow-sm"
+            className="border border-3 border-light shadow-sm"
             alt="Profile"
           />
         </Col>
         <Col md={8}>
-          <Card className="shadow-sm p-4 border-light">
+          <Card className="p-4 border-light">
             <Card.Body>
               <h5 className="fw-bold mb-3">Profile Information</h5>
               <p>
@@ -38,12 +39,7 @@ const ProfilePage: React.FC = () => {
                 <strong>Location:</strong> {user.location}
               </p>
               <p>
-                <strong>Roles:</strong>{" "}
-                {user.roles.map((role, i) => (
-                  <span key={i} className="badge bg-primary me-2 py-2 px-3">
-                    {role}
-                  </span>
-                ))}
+                <strong><a href={user.url} target="_blank" className="text-danger">Certifications</a></strong>
               </p>
             </Card.Body>
           </Card>

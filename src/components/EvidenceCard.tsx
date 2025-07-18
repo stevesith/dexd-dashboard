@@ -1,69 +1,169 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import htmlBadge from "../assets/html-badge.svg";
 import cssBadge from "../assets/css-badge.svg";
 import jsBadge from "../assets/js-badge.svg";
+import generalBadge from "../assets/general-badge.svg";
+import softSBadge from "../assets/softskills-badge.svg";
 
-interface EvidenceCardProps {
-  quarter: string;
-  progress: number;
+interface Skill {
+  id: string;
+  name: string;
+  image: string;
+  color: string;
+  proficiency: number;
 }
 
-const skillData = [
-  { skill: "HTML 5", image: htmlBadge, color: "primary", progress: 90 },
-  { skill: "CSS 3", image: cssBadge, color: "primary", progress: 75 },
-  { skill: "JavaScript", image: jsBadge, color: "primary", progress: 65 },
+interface SkillsCardProps {
+  title?: string;
+  description?: string;
+}
+
+const SKILLS_DATA: Skill[] = [
+  {
+    id: "html",
+    name: "HTML 5",
+    image: htmlBadge,
+    color: "primary",
+    proficiency: 90,
+  },
+  {
+    id: "css",
+    name: "CSS 3",
+    image: cssBadge,
+    color: "primary",
+    proficiency: 75,
+  },
+  {
+    id: "javascript",
+    name: "JavaScript",
+    image: jsBadge,
+    color: "primary",
+    proficiency: 65,
+  },
+  {
+    id: "design",
+    name: "Design",
+    image: generalBadge,
+    color: "primary",
+    proficiency: 81,
+  },
+  {
+    id: "softskills",
+    name: "Soft Skills",
+    image: softSBadge,
+    color: "primary",
+    proficiency: 35,
+  },
 ];
 
-const EvidenceCard: React.FC<EvidenceCardProps> = () => {
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+const DEFAULT_PROPS = {
+  title: "Skillset Overview",
+  description:
+    "Creative and detail-oriented digital designer and front-end developer skilled in crafting responsive user interfaces, branding assets, and interactive web experiences using HTML, CSS, JavaScript, and modern frameworks",
+};
+
+const SkillsCard: React.FC<SkillsCardProps> = ({
+  title = DEFAULT_PROPS.title,
+  description = DEFAULT_PROPS.description,
+}) => {
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [fadeClass, setFadeClass] = useState("scroll-container");
+
+  const handleScrollToCard = (id: string) => {
+    const card = cardRefs.current[id];
+    if (card) {
+      card.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const scrollLeft = container.scrollLeft;
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+
+      if (scrollLeft === 0) {
+        setFadeClass("scroll-container"); // Only right fade
+      } else if (scrollLeft >= maxScrollLeft - 1) {
+        setFadeClass("scroll-container fade-left"); // Only left fade
+      } else {
+        setFadeClass("scroll-container fade-both"); // Both fades
+      }
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    handleScroll(); // Init
+
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className="skill-card card border-0 pt-4 mt-4 mb-4 bg-primary-subtle rounded-4">
-      <h3 className="card-title text-muted">Skillset Overview</h3>
-      <br />
-      <p className="card-text text-muted">
-        Creative and detail-oriented digital designer and front-end developer
-        skilled in crafting responsive user interfaces, branding assets, and
-        interactive web experiences using HTML, CSS, JavaScript, and modern
-        frameworks
-      </p>
-      <hr className="border-lg border-primary" />
-      <div className="card-body d-flex flex-row justify-content-between flex-wrap gap-3 pt-4">
-        {skillData.map(({ skill, image, color, progress }, index) => (
+    <div className="card border-0 p-4 my-4 bg-primary-subtle rounded-4">
+      <div className="card-header bg-transparent border-0 px-0">
+        <h3 className="card-title text-muted mb-3">{title}</h3>
+        <p className="card-text text-muted mb-0">{description}</p>
+      </div>
+
+      <hr className="border-primary my-5" />
+
+      <div
+        ref={scrollContainerRef}
+        className={`card-body d-flex flex-row gap-3 overflow-auto ${fadeClass}`}
+        style={{ scrollSnapType: "x mandatory" }}
+      >
+        {SKILLS_DATA.map((skill) => (
           <div
-            key={index}
-            onMouseEnter={() => setHoverIndex(index)}
-            onMouseLeave={() => setHoverIndex(null)}
-            className="tech-skill d-flex align-items-center bg-light rounded-4 p-3 flex-grow-1"
+            key={skill.id}
+            ref={(el) => (cardRefs.current[skill.id] = el)}
+            onClick={() => handleScrollToCard(skill.id)}
+            onMouseEnter={() => setHoveredSkill(skill.id)}
+            onMouseLeave={() => setHoveredSkill(null)}
+            className={`bg-light rounded-4 p-3 flex-shrink-0 transition-all ${
+              hoveredSkill === skill.id ? "shadow-sm" : ""
+            }`}
             style={{
-              minWidth: "350px",
-              maxWidth: "300px",
-              transform: hoverIndex === index ? "scale(1.03)" : "scale(1)",
-              transition: "transform 0.3s ease-in-out",
+              minWidth: "280px",
+              maxWidth: "320px",
+              scrollSnapAlign: "center",
+              cursor: "pointer",
             }}
           >
-            <img
-              src={image}
-              className="px-2 py-2"
-              alt={`${skill} Badge`}
-              style={{ width: "60px", height: "60px" }}
-            />
-            <div className="d-flex flex-column ps-3 py-2 gap-2 w-100">
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <h4 className="mb-0">{skill}</h4>
-                <small className="text-muted me-2 bg-primary-subtle p-1 px-2 rounded-pill">
-                  {progress}%
-                </small>
-              </div>
-              <div className="progress" style={{ height: "6px" }}>
-                <div
-                  className={`progress-bar-striped bg-${color}`}
-                  role="progressbar"
-                  style={{ width: `${progress}%`, borderRadius: "8px" }}
-                  aria-valuenow={progress}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                ></div>
+            <div className="d-flex align-items-cente">
+              <img
+                src={skill.image}
+                className="me-3"
+                alt={`${skill.name} Badge`}
+                width="34"
+                height="34"
+              />
+              <div className="flex-grow-1">
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                  <h4 className="mb-0 fs-5">{skill.name}</h4>
+                  <span className="badge bg-primary-subtle text-primary">
+                    {skill.proficiency}%
+                  </span>
+                </div>
+                <div className="progress" style={{ height: "6px" }}>
+                  <div
+                    className={`progress-bar-striped bg-${skill.color}`}
+                    role="progressbar"
+                    style={{
+                      width: `${skill.proficiency}%`,
+                      borderRadius: "8px",
+                    }}
+                    aria-valuenow={skill.proficiency}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -73,4 +173,4 @@ const EvidenceCard: React.FC<EvidenceCardProps> = () => {
   );
 };
 
-export default EvidenceCard;
+export default SkillsCard;

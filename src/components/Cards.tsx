@@ -40,7 +40,7 @@ const Cards: React.FC = () => {
         {cardData.map((card, index) => (
           <Col key={index}>
             <Card
-              className="h-100 mx-auto card-hover card-body shadow-sm border-primary"
+              className="h-100 mx-auto card-hover card-body shadow-sm border-light-subtle"
               style={{ maxWidth: "350px", height: "350px" }}
             >
               <Card.Body className="d-flex flex-column">

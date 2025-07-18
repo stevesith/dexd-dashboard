@@ -160,6 +160,33 @@ a.nav-link:hover {
 .tech-skill:hover {
   background-color: aqua;
 }
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+/* Default state: only fade right */
+.scroll-container {
+  position: relative;
+  overflow-x: auto;
+  -webkit-mask-image: linear-gradient(to right, black 90%, transparent);
+  mask-image: linear-gradient(to right, black 90%, transparent);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  transition: -webkit-mask-image 0.3s ease;
+}
+
+/* Middle scroll: fade both sides */
+.scroll-container.fade-both {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+/* End scroll: only fade left */
+.scroll-container.fade-left {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%);
+  mask-image: linear-gradient(to right, transparent, black 10%);
+}
 
 @keyframes logo-spin {
   from {
@@ -222,22 +249,17 @@ button {
 }
 
 @media (max-width: 576px) {
-  .tech-skill {
-    flex-direction: column;
-    align-items: start !important;
-  }
+
 }
 
-@media (max-width: 576px) {
-  .navbar-brand span {
-    font-size: 0.9rem;
-  }
-  
   @media (max-width: 576px) {
+
+  .tech-skill {
+    flex-direction: column;
+  }
   .profile-info p {
     font-size: 0.9rem;
   }
-
   .profile-info .badge {
     font-size: 0.75rem;
   }
@@ -260,10 +282,11 @@ button {
     background-size: cover;
     background-position: center;
   }
-
   .custom-dropdown-menu .dropdown-item {
     font-size: 0.9rem;
     padding: 10px 16px;
   }
-}
+  .skills-card {
+    width: fit-content;
+  }
 

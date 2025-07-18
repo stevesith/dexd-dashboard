@@ -22,8 +22,8 @@ const person = {
 const Navigation: React.FC = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const dropdownMenuRef = useRef<HTMLDivElement>(null); // ✅ Add this ref
+  const dropdownMenuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
 
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
 
@@ -39,11 +39,15 @@ const Navigation: React.FC = () => {
 
   const welcomeMsg = `Welcome, ${person.roles[currentRoleIndex]}`;
 
+  // Handle outside clicks
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
+      const target = event.target as Node;
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        dropdownMenuRef.current &&
+        !dropdownMenuRef.current.contains(target) &&
+        triggerRef.current &&
+        !triggerRef.current.contains(target)
       ) {
         setShowProfileMenu(false);
       }
@@ -93,98 +97,109 @@ const Navigation: React.FC = () => {
                 ></lord-icon>
               </div>
 
-              <Dropdown ref={dropdownRef} show={showProfileMenu}>
-                <Dropdown.Toggle
-                  as="div"
-                  id="profile-dropdown"
-                  className="d-flex align-items-center"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setShowProfileMenu(!showProfileMenu)}
-                  role="button"
-                >
-                  <Image
-                    src={profilePic2}
-                    alt="Profile"
-                    roundedCircle
-                    width="40"
-                    height="40"
-                    className="border border-primary border-3"
-                  />
-                  <i className="bi bi-chevron-down text-white ms-2"></i>
-                </Dropdown.Toggle>
-
-                <CSSTransition
-                  in={showProfileMenu}
-                  timeout={300}
-                  classNames="fade-menu"
-                  unmountOnExit
-                  nodeRef={dropdownMenuRef}
-                >
-                  <Dropdown.Menu
-                    ref={dropdownMenuRef}
-                    align="end"
-                    className="shadow-sm custom-dropdown-menu w-max-content mt-2"
-                    id="pdm-menu"
+              <div ref={triggerRef}>
+                <Dropdown show={showProfileMenu}>
+                  <Dropdown.Toggle
+                    as="div"
+                    id="profile-dropdown"
+                    className="d-flex align-items-center"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setShowProfileMenu(!showProfileMenu)}
+                    role="button"
                   >
-                    <Dropdown.Item
-                      as={Link}
-                      to="/profile-details"
-                      className="fw-bold fs-5 text-start text-wrap"
-                    >
-                      <div className="d-flex align-items-center">
-                        <Image
-                          src={profilePic2}
-                          alt="Profile"
-                          roundedCircle
-                          width="70"
-                          height="70"
-                          className="me-3 ms-3"
-                        />
+                    <Image
+                      src={profilePic2}
+                      alt="Profile"
+                      roundedCircle
+                      width="40"
+                      height="40"
+                      className="border border-primary border-3"
+                    />
+                    <i className="bi bi-chevron-down text-white ms-2"></i>
+                  </Dropdown.Toggle>
 
-                        <span
-                          className="avi-edit d-flex align-items-center justify-content-center rounded-circle shadow-sm position-fixed top-40 start-20 mt-5 bg-white"
-                          style={{ width: "30px", height: "30px" }}
-                        >
-                          <i
-                            className="bi bi-pencil-fill avi-pencil"
-                            style={{ fontSize: "0.80rem" }}
-                          ></i>
-                        </span>
-
-                        <span>Sithembiso Stevens Mahlangu</span>
-                      </div>
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      as={Link}
-                      to="/email"
-                      className="border-bottom"
+                  <CSSTransition
+                    in={showProfileMenu}
+                    timeout={300}
+                    classNames="fade-menu"
+                    unmountOnExit
+                    nodeRef={dropdownMenuRef}
+                  >
+                    <Dropdown.Menu
+                      ref={dropdownMenuRef}
+                      align="end"
+                      className="shadow-sm custom-dropdown-menu w-max-content mt-2"
+                      id="pdm-menu"
                     >
-                      <p
-                        className=" d-flex align-items-center text-start text-decoration-underline"
-                        style={{ fontSize: "0.90rem" }}
+                      <Dropdown.Item
+                        as={Link}
+                        to="/profile-details"
+                        className="fw-bold fs-5 text-start text-wrap"
+                        onClick={() => setShowProfileMenu(false)}
                       >
-                        sithembiso@falcorp.co.za
-                      </p>
-                    </Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/profile">
-                      <i className="bi bi-person me-2"></i> View Profile
-                    </Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/settings">
-                      <i className="bi bi-gear me-2"></i> Settings
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      as="button"
-                      onClick={() => {
-                        setShowProfileMenu(false);
-                        setShowLogoutModal(true);
-                      }}
-                      className="text-danger"
-                    >
-                      <i className="bi bi-box-arrow-in-right me-2"></i> Log out
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </CSSTransition>
-              </Dropdown>
+                        <div className="d-flex align-items-center">
+                          <Image
+                            src={profilePic2}
+                            alt="Profile"
+                            roundedCircle
+                            width="70"
+                            height="70"
+                            className="me-3 ms-3"
+                          />
+                          <span
+                            className="avi-edit d-flex align-items-center justify-content-center rounded-circle shadow-sm position-fixed top-40 start-20 mt-5 bg-white"
+                            style={{ width: "30px", height: "30px" }}
+                          >
+                            <i
+                              className="bi bi-pencil-fill avi-pencil"
+                              style={{ fontSize: "0.80rem" }}
+                            ></i>
+                          </span>
+                          <span>Sithembiso Stevens Mahlangu</span>
+                        </div>
+                      </Dropdown.Item>
+
+                      <Dropdown.Item
+                        as={Link}
+                        to="/email"
+                        className="border-bottom"
+                        onClick={() => setShowProfileMenu(false)}
+                      >
+                        <p className="text-decoration-underline fs-6 mb-0">
+                          sithembiso@falcorp.co.za
+                        </p>
+                      </Dropdown.Item>
+
+                      <Dropdown.Item
+                        as={Link}
+                        to="/profile"
+                        onClick={() => setShowProfileMenu(false)}
+                      >
+                        <i className="bi bi-person me-2"></i> View Profile
+                      </Dropdown.Item>
+
+                      <Dropdown.Item
+                        as={Link}
+                        to="/settings"
+                        onClick={() => setShowProfileMenu(false)}
+                      >
+                        <i className="bi bi-gear me-2"></i> Settings
+                      </Dropdown.Item>
+
+                      <Dropdown.Item
+                        as="button"
+                        onClick={() => {
+                          setShowProfileMenu(false);
+                          setShowLogoutModal(true);
+                        }}
+                        className="text-danger"
+                      >
+                        <i className="bi bi-box-arrow-in-right me-2"></i> Log out
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </CSSTransition>
+                </Dropdown>
+              </div>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -197,21 +212,21 @@ const Navigation: React.FC = () => {
       >
         <Modal.Header closeButton className="border-0"></Modal.Header>
         <Modal.Body className="d-flex flex-column pb-2">
-          <i className="d-flex bi bi-question-circle display-1 pb-3 justify-content-center text-primary"></i>
+          <i className="bi bi-question-circle display-1 text-primary text-center pb-3"></i>
           <p className="text-center fs-5 pt-2 pb-2">
             Are you sure you want to log out?
           </p>
         </Modal.Body>
-        <Modal.Footer className="d-inline-flex justify-content-center border-0 pb-4 gap-3">
+        <Modal.Footer className="d-flex justify-content-center border-0 pb-4 gap-3">
           <button
-            className="btn btn-outline-dark rounded-pill ps-4 pe-4"
+            className="btn btn-outline-dark rounded-pill px-4"
             onClick={() => setShowLogoutModal(false)}
           >
-            <span>Cancel</span>
+            Cancel
           </button>
           <Link
             to="https://www.google.com"
-            className="btn btn-primary rounded-pill ps-4 pe-4 text-white"
+            className="btn btn-primary rounded-pill px-4 text-white"
           >
             Yes, Log out
           </Link>
