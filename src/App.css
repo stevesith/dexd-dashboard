@@ -1,3 +1,5 @@
+/* Existing styles you shared, plus scroll container and fade effect styles */
+
 html,
 body,
 #root {
@@ -160,32 +162,97 @@ a.nav-link:hover {
 .tech-skill:hover {
   background-color: aqua;
 }
-.scroll-container::-webkit-scrollbar {
-  display: none;
-}
-/* Default state: only fade right */
+
+/* Scroll container base styles */
 .scroll-container {
   position: relative;
   overflow-x: auto;
-  -webkit-mask-image: linear-gradient(to right, black 90%, transparent);
-  mask-image: linear-gradient(to right, black 90%, transparent);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  transition: -webkit-mask-image 0.3s ease;
+  scroll-behavior: smooth;
+  /* optional: hide scrollbar on Firefox */
+  scrollbar-width: none;
+}
+.scroll-container::-webkit-scrollbar {
+  display: none;
 }
 
-/* Middle scroll: fade both sides */
-.scroll-container.fade-both {
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+/* Custom Tabs and Accordion styling */
+.custom-tabs .nav-link:hover {
+  color: #007bff;
 }
 
-/* End scroll: only fade left */
-.scroll-container.fade-left {
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%);
-  mask-image: linear-gradient(to right, transparent, black 10%);
+.custom-tabs .nav-link.active {
+  color: #007bff;
+}
+
+.custom-tabs .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0;
+  background-color: #007bff;
+  transition: width 0.3s ease;
+}
+
+/* Animate underline on active tab */
+.custom-tabs .nav-link.active::after {
+  width: 100%;
+}
+
+/* Avatar wrapper and overlay */
+.avatar-wrapper {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.avatar-wrapper .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 2;
+}
+
+.avatar-wrapper:hover .overlay {
+  opacity: 1;
+}
+
+/* Accordion button tweaks */
+.accordion-button::after {
+  display: none !important;
+}
+
+/* Custom icon rotation */
+.accordion-button .custom-toggle-icon {
+  transition: transform 0.3s ease;
+  margin-left: auto;
+  font-size: 1.25rem;
+}
+
+.accordion-button.collapsed .custom-toggle-icon {
+  transform: rotate(0deg);
+}
+.accordion-button:not(.collapsed) .custom-toggle-icon {
+  transform: rotate(45deg); /* simulate minus sign */
+}
+
+.transition-icon {
+  transition: all 0.3s ease-in-out;
 }
 
 @keyframes logo-spin {
@@ -249,11 +316,6 @@ button {
 }
 
 @media (max-width: 576px) {
-
-}
-
-  @media (max-width: 576px) {
-
   .tech-skill {
     flex-direction: column;
   }
@@ -265,28 +327,29 @@ button {
   }
 }
 
-  .card-title {
-    font-size: 1.1rem;
-  }
+.card-title {
+  font-size: 1.1rem;
+}
 
-  .kpi-results {
-    font-size: 0.95rem;
-  }
+.kpi-results {
+  font-size: 0.95rem;
+}
 
-  #btn-pearls {
-    width: 100%;
-    font-size: 1rem;
-  }
+#btn-pearls {
+  width: 100%;
+  font-size: 1rem;
+}
 
-  .card-with-bg {
-    background-size: cover;
-    background-position: center;
-  }
-  .custom-dropdown-menu .dropdown-item {
-    font-size: 0.9rem;
-    padding: 10px 16px;
-  }
-  .skills-card {
-    width: fit-content;
-  }
+.card-with-bg {
+  background-size: cover;
+  background-position: center;
+}
 
+.custom-dropdown-menu .dropdown-item {
+  font-size: 0.9rem;
+  padding: 10px 16px;
+}
+
+.skills-card {
+  width: fit-content;
+}

@@ -69,7 +69,9 @@ const SkillsCard: React.FC<SkillsCardProps> = ({
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const [fadeClass, setFadeClass] = useState("scroll-container");
+
+  // fadeClass will be one of: fade-left, fade-right, fade-both
+  const [fadeClass, setFadeClass] = useState("fade-right");
 
   const handleScrollToCard = (id: string) => {
     const card = cardRefs.current[id];
@@ -90,17 +92,17 @@ const SkillsCard: React.FC<SkillsCardProps> = ({
       const scrollLeft = container.scrollLeft;
       const maxScrollLeft = container.scrollWidth - container.clientWidth;
 
-      if (scrollLeft === 0) {
-        setFadeClass("scroll-container"); // Only right fade
+      if (scrollLeft <= 0) {
+        setFadeClass("fade-right");
       } else if (scrollLeft >= maxScrollLeft - 1) {
-        setFadeClass("scroll-container fade-left"); // Only left fade
+        setFadeClass("fade-left");
       } else {
-        setFadeClass("scroll-container fade-both"); // Both fades
+        setFadeClass("fade-both");
       }
     };
 
     container.addEventListener("scroll", handleScroll);
-    handleScroll(); // Init
+    handleScroll();
 
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
@@ -108,15 +110,15 @@ const SkillsCard: React.FC<SkillsCardProps> = ({
   return (
     <div className="card border-0 p-4 my-4 bg-primary-subtle rounded-4">
       <div className="card-header bg-transparent border-0 px-0">
-        <h3 className="card-title text-muted mb-3">{title}</h3>
-        <p className="card-text text-muted mb-0">{description}</p>
+        <h2 className="card-title text-muted mb-3 fs-2">{title}</h2>
+        <p className="card-text text-muted mb-0 fs-5">{description}</p>
       </div>
 
       <hr className="border-primary my-5" />
 
       <div
         ref={scrollContainerRef}
-        className={`card-body d-flex flex-row gap-3 overflow-auto ${fadeClass}`}
+        className={`scroll-container card-body d-flex flex-row gap-3 overflow-auto ${fadeClass}`}
         style={{ scrollSnapType: "x mandatory" }}
       >
         {SKILLS_DATA.map((skill) => (
@@ -136,7 +138,7 @@ const SkillsCard: React.FC<SkillsCardProps> = ({
               cursor: "pointer",
             }}
           >
-            <div className="d-flex align-items-cente">
+            <div className="d-flex align-items-center">
               <img
                 src={skill.image}
                 className="me-3"
@@ -147,7 +149,7 @@ const SkillsCard: React.FC<SkillsCardProps> = ({
               <div className="flex-grow-1">
                 <div className="d-flex justify-content-between align-items-center mb-2">
                   <h4 className="mb-0 fs-5">{skill.name}</h4>
-                  <span className="badge bg-primary-subtle text-primary">
+                  <span className="badge bg-primary-subtle text-primary my-2">
                     {skill.proficiency}%
                   </span>
                 </div>

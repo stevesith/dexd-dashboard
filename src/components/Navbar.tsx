@@ -39,7 +39,6 @@ const Navigation: React.FC = () => {
 
   const welcomeMsg = `Welcome, ${person.roles[currentRoleIndex]}`;
 
-  // Handle outside clicks
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as Node;
@@ -61,14 +60,13 @@ const Navigation: React.FC = () => {
 
   return (
     <>
-      <Navbar bg="black" expand="lg" className="fixed-top">
+      <Navbar bg="black" expand="lg" className="fixed-top shadow-sm py-2">
         <Container>
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
               src={logo}
               alt="Flowdexd Logo"
               height="30"
-              title="Flowdexd Logo"
               className="d-inline-block align-top"
             />
             <span className="ms-5 text-white fs-5">{welcomeMsg}</span>
@@ -76,26 +74,27 @@ const Navigation: React.FC = () => {
 
           <Navbar.Toggle aria-controls="main-navbar-nav" />
           <Navbar.Collapse id="main-navbar-nav">
-            <Nav className="ms-auto column-gap-4 py-2 shadow-lg">
-              <div className="d-flex align-items-center">
-                <lord-icon
-                  src="https://cdn.lordicon.com/ahxaipjb.json"
-                  trigger="hover"
-                  colors="primary:#fff"
-                  style={{ width: "24px", height: "24px" }}
-                  title="Notifications"
-                ></lord-icon>
-              </div>
-
-              <div className="d-flex align-items-center">
-                <lord-icon
-                  src="https://cdn.lordicon.com/uoljexdg.json"
-                  trigger="hover"
-                  colors="primary:#fff"
-                  style={{ width: "24px", height: "24px" }}
-                  title="View Week"
-                ></lord-icon>
-              </div>
+            <Nav className="ms-auto column-gap-4 py-2">
+              {[
+                {
+                  icon: "https://cdn.lordicon.com/ahxaipjb.json",
+                  title: "Notifications",
+                },
+                {
+                  icon: "https://cdn.lordicon.com/uoljexdg.json",
+                  title: "View Week",
+                },
+              ].map((item, idx) => (
+                <div key={idx} className="d-flex align-items-center">
+                  <lord-icon
+                    src={item.icon}
+                    trigger="hover"
+                    colors="primary:#fff"
+                    style={{ width: "24px", height: "24px" }}
+                    title={item.title}
+                  ></lord-icon>
+                </div>
+              ))}
 
               <div ref={triggerRef}>
                 <Dropdown show={showProfileMenu}>
@@ -128,13 +127,12 @@ const Navigation: React.FC = () => {
                     <Dropdown.Menu
                       ref={dropdownMenuRef}
                       align="end"
-                      className="shadow-sm custom-dropdown-menu w-max-content mt-2"
-                      id="pdm-menu"
+                      className="shadow-sm custom-dropdown-menu mt-2"
                     >
                       <Dropdown.Item
                         as={Link}
                         to="/profile-details"
-                        className="fw-bold fs-5 text-start text-wrap"
+                        className="fw-bold fs-4 text-start text-wrap"
                         onClick={() => setShowProfileMenu(false)}
                       >
                         <div className="d-flex align-items-center">
@@ -147,7 +145,7 @@ const Navigation: React.FC = () => {
                             className="me-3 ms-3"
                           />
                           <span
-                            className="avi-edit d-flex align-items-center justify-content-center rounded-circle shadow-sm position-fixed top-40 start-20 mt-5 bg-white"
+                            className="avi-edit d-flex align-items-center justify-content-center rounded-circle shadow-sm position-fixed bg-white"
                             style={{ width: "30px", height: "30px" }}
                           >
                             <i
@@ -165,8 +163,8 @@ const Navigation: React.FC = () => {
                         className="border-bottom"
                         onClick={() => setShowProfileMenu(false)}
                       >
-                        <p className="text-decoration-underline fs-6 mb-0">
-                          sithembiso@falcorp.co.za
+                        <p className="text-decoration-underline mb-2">
+                          <span>sithembiso@falcorp.co.za</span>
                         </p>
                       </Dropdown.Item>
 
